@@ -1,0 +1,64 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+--[[
+Conky, a system monitor, based on torsmo
+
+Any original torsmo code is licensed under the BSD license
+
+All code written since the fork of torsmo is licensed under the GPL
+
+Please see COPYING for details
+
+Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+Copyright (c) 2005-2012 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+This layout is a panel layout with system information in it. It includes 
+CPU usage, memory, filesystem usage, current kernel, uptime, currently 
+playing song in deadbeef (should be modified to your media player output) and
+wireless connection status and machine IP (should be modified to your wireless
+connection, ethernet, etc.)
+]]
+
+conky.config = {
+	out_to_x = true,
+	double_buffer = true,
+    cpu_avg_samples = 2,
+	minimum_width = 1920,
+	maximum_width = 1920,
+	minimum_height = 11,
+    net_avg_samples = 2,
+    own_window = true,
+	if_up_strictness = "address",
+	own_window_class = "Conky",
+	own_window_type = "panel",
+	alignment = "bottom_middle",
+	use_xft = true,
+	font = "monospace:size=9",
+	border_inner_margin = 0,
+	border_outer_margin = 0,
+	gap_y = 0,
+	gap_x = 0,
+    update_interval = 1.0,
+	format_human_readable = true,
+	use_spacer = right,
+	max_text_width = 0,
+	own_window_argb_visual = true,
+	own_window_argb_value = 120
+}
+
+conky.text = [[
+CPU Usage: ${cpubar cpu0 8,100} ${acpitemp} | Memory: ${mem} used of ${memmax} | / ${fs_used} used of ${fs_size} | /home ${fs_used /home} used of ${fs_size /home} ${alignr}${exec deadbeef --nowplaying "%a - %t"}
+Linux ${kernel} | Up ${uptime} | Pending updates: ${execpi 180 sudo $HOME/.paccheck.sh} ${alignr}${if_up wlp5s0}${wireless_essid wlp5s0} | ${addr wlp5s0} | ${wireless_link_qual_perc wlp5s0}%${endif}
+]]
